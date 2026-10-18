@@ -159,20 +159,28 @@
   if (track) {
     const LOGOS = {
       "Claude Code": "claude", "MCP": "modelcontextprotocol", "GitHub Copilot": "githubcopilot", "Cursor": "cursor",
-      "Pytest": "pytest", "Cypress": "cypress", "Appium": "appium", "WebdriverIO": "webdriverio",
+      "Pytest": "pytest", "Cypress": "cypress", "Appium": "appium",
       "Robot Framework": "robotframework", "Radish / BDD": "cucumber", "Tricentis": "tricentis",
       "Python": "python", "TypeScript": "typescript", "JavaScript": "javascript",
       "GitHub Actions": "githubactions", "Docker": "docker", "Kubernetes": "kubernetes", "Argo CD": "argo",
       "Jenkins": "jenkins", "RabbitMQ": "rabbitmq", "Postgres": "postgresql", "FastAPI": "fastapi",
       "React": "react", "Postman": "postman", "TestRail": "testrail", "JIRA": "jira", "Confluence": "confluence",
+      "AWS Bedrock": "awsbedrock", "Dust": "dust", "Playwright": "playwright", "WebdriverIO": "webdriverio",
+      "Proxyman": "proxyman", "BrowserStack": "browserstack", "HP ALM": "hpalm", "IBM DOORS": "ibmdoors",
     };
-    const names = [...document.querySelectorAll("#stack .tags li")].map((li) => li.textContent.trim());
+    // Official marks with no SVG source, converted to single-colour PNG masks.
+    const PNG_LOGOS = new Set(["awsbedrock", "dust", "playwright", "webdriverio", "proxyman", "browserstack", "hpalm", "ibmdoors"]);
+    const SKIP = new Set(["Agile", "V-model"]); // methodologies, not tools
+    const names = [...document.querySelectorAll("#stack .tags li")]
+      .map((li) => li.textContent.trim())
+      .filter((name) => !SKIP.has(name));
     const makeItem = (name) => {
       const li = document.createElement("li");
       const icon = document.createElement("span");
       if (LOGOS[name]) {
         icon.className = "tool-logo";
-        const url = `url("assets/logos/${LOGOS[name]}.svg")`;
+        const ext = PNG_LOGOS.has(LOGOS[name]) ? "png" : "svg";
+        const url = `url("assets/logos/${LOGOS[name]}.${ext}")`;
         icon.style.webkitMaskImage = url;
         icon.style.maskImage = url;
       } else {
