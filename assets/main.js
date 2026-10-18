@@ -92,12 +92,34 @@
   // (Not the native <details name> accordion, since print needs every group open at once.)
   let printing = false;
   const certGroups = [...document.querySelectorAll("details.cert-group")];
+  // On multi-column layouts the open group's courses show in a full-width panel below the grid,
+  // so the cards keep their cells. On one column (and in print) they stay inside their card.
+  const certGrid = document.querySelector(".cert-grid");
+  const certPanel = document.createElement("div");
+  certPanel.className = "cert-panel";
+  certPanel.setAttribute("role", "region");
+  certPanel.hidden = true;
+  certGrid?.after(certPanel);
+  const singleColumn = matchMedia("(max-width: 760px)");
+  const contentOf = (group) => [...group.querySelectorAll(".cert-list, .cert-link")];
+  const homes = new Map(certGroups.map((g) => [g, contentOf(g)]));
+  const placeCertContent = () => {
+    const open = certGroups.find((g) => g.open);
+    const usePanel = open && !printing && !singleColumn.matches;
+    homes.forEach((nodes, group) => {
+      const target = usePanel && group === open ? certPanel : group;
+      if (nodes[0].parentNode !== target) target.append(...nodes);
+    });
+    certPanel.hidden = !usePanel;
+    if (usePanel) certPanel.setAttribute("aria-label", open.querySelector("h3").textContent);
+  };
   certGroups.forEach((group) =>
     group.addEventListener("toggle", () => {
-      if (printing || !group.open) return;
-      certGroups.forEach((g) => { if (g !== group) g.open = false; });
+      if (!printing && group.open) certGroups.forEach((g) => { if (g !== group) g.open = false; });
+      placeCertContent();
     })
   );
+  singleColumn.addEventListener("change", placeCertContent);
 
   // Print-as-CV: expand every role and the learning group so the PDF contains the full history.
   let closedRoles = [];
@@ -105,10 +127,12 @@
     printing = true;
     closedRoles = [...document.querySelectorAll("details.role:not([open]), details.cert-group:not([open])")];
     closedRoles.forEach((d) => (d.open = true));
+    placeCertContent();
   });
   addEventListener("afterprint", () => {
     closedRoles.forEach((d) => (d.open = false));
     printing = false;
+    placeCertContent();
   });
 
   // Public GitHub repos (section stays hidden if there is nothing to show)
@@ -120,12 +144,12 @@
       .then((repos) => {
         const HIDDEN = ["profile", "replit-project"];
         // GitHub only reports the dominant language; list the rest of the stack here.
-        const EXTRA_TAGS = { "meal-planner": ["Python", "AI"] };
+        const EXTRA_TAGS = { "meal-planner": ["Python", "Claude Code"] };
         // Longer descriptions than GitHub's one-liner; each entry is a paragraph.
         const DESCRIPTIONS = {
           "meal-planner": [
-            "Meal planner application, with recipes, calendar and shopping list for personal use, but more importantly for testing against.",
-            "Testing framework covering unit, integration, e2e testing with CI integration.",
+            "A meal planner I built as a quality engineering lab: FastAPI ( Python) and React ( Typescript), with unit ( Jest), integration( Pytest) tests and E2E ( Playwright) running in GitHub Actions.",
+            "Contract and performance layers are in progress. As well a Quality KPIs dashboard.",
           ],
         };
         const shown = repos.filter((r) => !r.fork && !HIDDEN.includes(r.name) && r.description).slice(0, 6);

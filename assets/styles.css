@@ -214,24 +214,25 @@ ul, ol { margin: 0; padding: 0; }
 .stack-group h3 { font-size: 15px; margin-bottom: 14px; color: var(--ink-2); }
 
 /* Certs */
-.cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .cert { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; }
 .cert-highlight { border-color: var(--accent); background: linear-gradient(160deg, var(--accent-soft), var(--surface) 70%); }
 .cert-issuer { font: 600 12px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--accent-ink); margin-bottom: 8px; }
 .cert h3 { font-size: 1rem; font-weight: 650; margin-bottom: 10px; }
 .cert-date { margin: auto 0 0; font: 13px var(--mono); color: var(--ink-3); }
 .cert-group { padding: 0; transition: border-color .2s; }
-.cert-group[open] { grid-column: 1 / -1; border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); box-shadow: var(--shadow); }
+.cert-group[open] { border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); box-shadow: var(--shadow); }
 .cert-group summary { position: relative; display: flex; flex-direction: column; height: 100%; padding: 20px 52px 20px 22px; cursor: pointer; list-style: none; }
 .cert-group summary::-webkit-details-marker { display: none; }
 .cert-group summary::after { content: "+"; position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; font: 400 20px/1 var(--mono); color: var(--accent-ink); background: var(--accent-soft); transition: transform .2s, color .2s, background .2s; }
-/* A closed group after the open one stays put on the first row instead of dropping below it. */
-.cert-group[open] ~ .cert-group:not([open]) { grid-area: 1 / 3; }
 .cert-group[open] summary::after { transform: rotate(45deg); color: var(--ink-3); background: none; }
 /* Expanding ring around the "+" hints that the card opens; stops once opened or hovered. */
 .cert-group summary::before { content: ""; position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--accent); pointer-events: none; animation: ring 2.4s ease-out infinite; }
 .cert-group[open] summary::before, .cert-group summary:hover::before { animation: none; opacity: 0; }
 @keyframes ring { 0% { transform: scale(1); opacity: .7; } 60%, 100% { transform: scale(1.9); opacity: 0; } }
+/* The open group's course list moves here (main.js) so the cards above keep their place. */
+.cert-panel { margin-top: 16px; padding-top: 6px; background: var(--surface); border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: 14px; box-shadow: var(--shadow); }
+.cert-panel .cert-list li:first-child { border-top: 0; }
 .cert-list { list-style: none; padding: 0 22px 12px; margin: 0; }
 .cert-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); font-weight: 600; font-size: 15px; }
 .cert-list .cert-date { margin: 0; white-space: nowrap; font-weight: 400; }
@@ -339,8 +340,7 @@ ul, ol { margin: 0; padding: 0; }
   .hero { grid-template-columns: 1fr; padding-top: 48px; gap: 40px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
-  .stack-grid, .cert-grid, .repo-grid { grid-template-columns: repeat(2, 1fr); }
-  .cert-group[open] ~ .cert-group:not([open]) { grid-area: auto; }
+  .stack-grid, .repo-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 760px) {
   .nav-toggle { display: block; }
