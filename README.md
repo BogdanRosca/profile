@@ -15,5 +15,6 @@ python3 -m http.server 8000   # then open http://localhost:8000
 ## Features
 - Light/dark theme (follows the OS, with a manual toggle)
 - Expandable experience timeline grouped by company to show career progression
-- "Download CV" prints the page as a clean, full-history CV (all roles expanded)
+- "Open CV" opens the PDF CV (`assets/cv/CV Rosca Bogdan.pdf`) in a new tab
+- Printing the page produces a clean, full-history CV (all roles expanded)
 - Public GitHub repos load automatically; the section stays hidden until there are repos with descriptions

@@ -88,14 +88,52 @@
     badgeModal.addEventListener("click", (e) => { if (e.target === badgeModal) badgeModal.close(); });
   }
 
+  // Only one cert group open at a time: opening one closes the others.
+  // (Not the native <details name> accordion, since print needs every group open at once.)
+  let printing = false;
+  const certGroups = [...document.querySelectorAll("details.cert-group")];
+  // On multi-column layouts the open group's courses show in a full-width panel below the grid,
+  // so the cards keep their cells. On one column (and in print) they stay inside their card.
+  const certGrid = document.querySelector(".cert-grid");
+  const certPanel = document.createElement("div");
+  certPanel.className = "cert-panel";
+  certPanel.setAttribute("role", "region");
+  certPanel.hidden = true;
+  certGrid?.after(certPanel);
+  const singleColumn = matchMedia("(max-width: 760px)");
+  const contentOf = (group) => [...group.querySelectorAll(".cert-list, .cert-link")];
+  const homes = new Map(certGroups.map((g) => [g, contentOf(g)]));
+  const placeCertContent = () => {
+    const open = certGroups.find((g) => g.open);
+    const usePanel = open && !printing && !singleColumn.matches;
+    homes.forEach((nodes, group) => {
+      const target = usePanel && group === open ? certPanel : group;
+      if (nodes[0].parentNode !== target) target.append(...nodes);
+    });
+    certPanel.hidden = !usePanel;
+    if (usePanel) certPanel.setAttribute("aria-label", open.querySelector("h3").textContent);
+  };
+  certGroups.forEach((group) =>
+    group.addEventListener("toggle", () => {
+      if (!printing && group.open) certGroups.forEach((g) => { if (g !== group) g.open = false; });
+      placeCertContent();
+    })
+  );
+  singleColumn.addEventListener("change", placeCertContent);
+
   // Print-as-CV: expand every role and the learning group so the PDF contains the full history.
   let closedRoles = [];
   addEventListener("beforeprint", () => {
+    printing = true;
     closedRoles = [...document.querySelectorAll("details.role:not([open]), details.cert-group:not([open])")];
     closedRoles.forEach((d) => (d.open = true));
+    placeCertContent();
   });
-  addEventListener("afterprint", () => closedRoles.forEach((d) => (d.open = false)));
-  document.querySelector("[data-print]")?.addEventListener("click", () => print());
+  addEventListener("afterprint", () => {
+    closedRoles.forEach((d) => (d.open = false));
+    printing = false;
+    placeCertContent();
+  });
 
   // Public GitHub repos (section stays hidden if there is nothing to show)
   const repoGrid = document.querySelector("[data-github-user]");
@@ -106,12 +144,12 @@
       .then((repos) => {
         const HIDDEN = ["profile", "replit-project"];
         // GitHub only reports the dominant language; list the rest of the stack here.
-        const EXTRA_TAGS = { "meal-planner": ["Python", "AI"] };
+        const EXTRA_TAGS = { "meal-planner": ["Python", "Claude Code"] };
         // Longer descriptions than GitHub's one-liner; each entry is a paragraph.
         const DESCRIPTIONS = {
           "meal-planner": [
-            "Meal planner application, with recipes, calendar and shopping list for personal use, but more importantly for testing against.",
-            "Testing framework covering unit, integration, e2e testing with CI integration.",
+            "A meal planner I built as a quality engineering lab: FastAPI (Python) and React (TypeScript), with unit (Jest, Pytest), integration (Pytest) and E2E (Playwright) tests running in GitHub Actions.",
+            "Next up: contract and performance tests, plus a quality KPI dashboard.",
           ],
         };
         const shown = repos.filter((r) => !r.fork && !HIDDEN.includes(r.name) && r.description).slice(0, 6);
@@ -144,21 +182,29 @@
   const track = document.querySelector("[data-marquee]");
   if (track) {
     const LOGOS = {
-      "Claude Code": "claude", "MCP": "modelcontextprotocol", "GitHub Copilot": "githubcopilot", "Cursor": "cursor",
-      "Pytest": "pytest", "Cypress": "cypress", "Appium": "appium", "WebdriverIO": "webdriverio",
-      "Robot Framework": "robotframework", "Radish / BDD": "cucumber", "Tricentis": "tricentis",
+      "Claude Code": "claude", "Hermes AI": "hermes", "MCP": "modelcontextprotocol", "GitHub Copilot": "githubcopilot", "Cursor": "cursor",
+      "Pytest": "pytest", "Cypress": "cypress", "Appium": "appium", "Selenium": "selenium", "Maestro": "maestro",
+      "Robot Framework": "robotframework", "Radish (BDD)": "cucumber", "Tricentis": "tricentis",
       "Python": "python", "TypeScript": "typescript", "JavaScript": "javascript",
       "GitHub Actions": "githubactions", "Docker": "docker", "Kubernetes": "kubernetes", "Argo CD": "argo",
       "Jenkins": "jenkins", "RabbitMQ": "rabbitmq", "Postgres": "postgresql", "FastAPI": "fastapi",
-      "React": "react", "Postman": "postman", "TestRail": "testrail", "JIRA": "jira", "Confluence": "confluence",
+      "React": "react", "Postman": "postman", "TestRail": "testrail", "Jira": "jira", "Confluence": "confluence",
+      "AWS Bedrock": "awsbedrock", "Dust": "dust", "Playwright": "playwright", "WebdriverIO": "webdriverio",
+      "Proxyman": "proxyman", "BrowserStack": "browserstack", "HP ALM": "hpalm", "IBM DOORS": "ibmdoors",
     };
-    const names = [...document.querySelectorAll("#stack .tags li")].map((li) => li.textContent.trim());
+    // Official marks with no SVG source, converted to single-colour PNG masks.
+    const PNG_LOGOS = new Set(["awsbedrock", "dust", "hermes", "maestro", "playwright", "webdriverio", "proxyman", "browserstack", "hpalm", "ibmdoors"]);
+    const SKIP = new Set(["Agile", "V-model"]); // methodologies, not tools
+    const names = [...document.querySelectorAll("#stack .tags li")]
+      .map((li) => li.textContent.trim())
+      .filter((name) => !SKIP.has(name));
     const makeItem = (name) => {
       const li = document.createElement("li");
       const icon = document.createElement("span");
       if (LOGOS[name]) {
         icon.className = "tool-logo";
-        const url = `url("assets/logos/${LOGOS[name]}.svg")`;
+        const ext = PNG_LOGOS.has(LOGOS[name]) ? "png" : "svg";
+        const url = `url("assets/logos/${LOGOS[name]}.${ext}")`;
         icon.style.webkitMaskImage = url;
         icon.style.maskImage = url;
       } else {
@@ -177,4 +223,14 @@
   }
 
   document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
+
+  // Years of experience, counted from Oct 2010
+  const now = new Date();
+  const years = now.getFullYear() - 2010 - (now.getMonth() < 9 ? 1 : 0);
+  document.querySelectorAll("[data-years]").forEach((el) => {
+    el.textContent = years;
+    if (el.dataset.count) el.dataset.count = years;
+  });
+  document.querySelectorAll("[data-years-label]").forEach((el) =>
+    el.setAttribute("aria-label", el.getAttribute("aria-label").replace(/\d+ years/, `${years} years`)));
 })();
