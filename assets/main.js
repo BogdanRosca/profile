@@ -105,6 +105,15 @@
       .then((r) => (r.ok ? r.json() : []))
       .then((repos) => {
         const HIDDEN = ["profile", "replit-project"];
+        // GitHub only reports the dominant language; list the rest of the stack here.
+        const EXTRA_TAGS = { "meal-planner": ["Python", "AI"] };
+        // Longer descriptions than GitHub's one-liner; each entry is a paragraph.
+        const DESCRIPTIONS = {
+          "meal-planner": [
+            "Meal planner application, with recipes, calendar and shopping list for personal use, but more importantly for testing against.",
+            "Testing framework covering unit, integration, e2e testing with CI integration.",
+          ],
+        };
         const shown = repos.filter((r) => !r.fork && !HIDDEN.includes(r.name) && r.description).slice(0, 6);
         if (!shown.length) return;
         repoGrid.replaceChildren(...shown.map((r) => {
@@ -115,12 +124,15 @@
           a.rel = "noopener";
           const h = document.createElement("h3");
           h.textContent = r.name;
-          const p = document.createElement("p");
-          p.textContent = r.description;
+          const paragraphs = (DESCRIPTIONS[r.name] || [r.description]).map((text) => {
+            const p = document.createElement("p");
+            p.textContent = text;
+            return p;
+          });
           const meta = document.createElement("div");
           meta.className = "repo-meta";
-          meta.textContent = [r.language, r.stargazers_count ? `★ ${r.stargazers_count}` : ""].filter(Boolean).join("  ·  ");
-          a.append(h, p, meta);
+          meta.textContent = [r.language, ...(EXTRA_TAGS[r.name] || []), r.stargazers_count ? `★ ${r.stargazers_count}` : ""].filter(Boolean).join("  ·  ");
+          a.append(h, ...paragraphs, meta);
           return a;
         }));
         repoGrid.closest("section").hidden = false;

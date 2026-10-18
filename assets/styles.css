@@ -268,8 +268,8 @@ ul, ol { margin: 0; padding: 0; }
 .repo { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; text-decoration: none; color: inherit; transition: border-color .2s, transform .2s; }
 .repo:hover { border-color: var(--accent); transform: translateY(-2px); }
 .repo h3 { font: 600 15px var(--mono); color: var(--accent-ink); margin-bottom: 8px; }
-.repo p { color: var(--ink-2); font-size: 14.5px; flex: 1; }
-.repo-meta { display: flex; gap: 14px; font: 12.5px var(--mono); color: var(--ink-3); }
+.repo p { color: var(--ink-2); font-size: 14.5px; }
+.repo-meta { margin-top: auto; display: flex; gap: 14px; font: 12.5px var(--mono); color: var(--ink-3); }
 
 /* Contact */
 .contact { padding-bottom: 40px; }
