@@ -56,7 +56,7 @@
     requestAnimationFrame(step);
   };
 
-  const revealTargets = document.querySelectorAll(".section-head, .card, .principles li, .company, .stack-group, .cert, .quote, .stat, .contact-card");
+  const revealTargets = document.querySelectorAll(".section-head, .card, .feature, .principles li, .company, .stack-group, .cert, .quote, .stat, .contact-card");
   if (!reduceMotion && "IntersectionObserver" in window) {
     revealTargets.forEach((el) => el.classList.add("reveal"));
     const revealer = new IntersectionObserver((entries) => {
@@ -135,23 +135,18 @@
     placeCertContent();
   });
 
-  // Public GitHub repos (section stays hidden if there is nothing to show)
+  // Public GitHub repos (grid stays hidden if there is nothing to show)
   const repoGrid = document.querySelector("[data-github-user]");
   if (repoGrid) {
     const user = repoGrid.dataset.githubUser;
     fetch(`https://api.github.com/users/${user}/repos?sort=updated&per_page=12`)
       .then((r) => (r.ok ? r.json() : []))
       .then((repos) => {
-        const HIDDEN = ["profile", "replit-project"];
+        const HIDDEN = ["profile", "replit-project", "meal-planner"]; // meal-planner has its own featured card
         // GitHub only reports the dominant language; list the rest of the stack here.
-        const EXTRA_TAGS = { "meal-planner": ["Python", "Claude Code"] };
+        const EXTRA_TAGS = {};
         // Longer descriptions than GitHub's one-liner; each entry is a paragraph.
-        const DESCRIPTIONS = {
-          "meal-planner": [
-            "A meal planner I built as a quality engineering lab: FastAPI (Python) and React (TypeScript), with unit (Jest, Pytest), integration (Pytest) and E2E (Playwright) tests running in GitHub Actions.",
-            "Next up: contract and performance tests, plus a quality KPI dashboard.",
-          ],
-        };
+        const DESCRIPTIONS = {};
         const shown = repos.filter((r) => !r.fork && !HIDDEN.includes(r.name) && r.description).slice(0, 6);
         if (!shown.length) return;
         repoGrid.replaceChildren(...shown.map((r) => {
@@ -173,7 +168,7 @@
           a.append(h, ...paragraphs, meta);
           return a;
         }));
-        repoGrid.closest("section").hidden = false;
+        repoGrid.hidden = false;
       })
       .catch(() => {});
   }

@@ -70,7 +70,7 @@
         </div>
       </div>
 
-      <div class="terminal" role="img" data-years-label aria-label="A test run summary: 16 years, 4 companies, 3 industries, 16+ engineers led and mentored: 3 passed, 1 running, 0 flaky.">
+      <div class="terminal" role="img" data-years-label aria-label="A test run summary: 16 years, 4 companies, 3 industries, 18+ engineers led and mentored: 3 passed, 1 running, 0 flaky.">
         <div class="terminal-bar"><span></span><span></span><span></span><code>~/career</code></div>
         <pre class="terminal-body" aria-hidden="true"><code><span class="t-dim">$</span> pytest career/ -v --agentic
 <span class="t-dim">collected 4 suites</span>
@@ -87,7 +87,7 @@ saas/contentsquare <span class="t-run">RUNNING</span> <span class="t-dim">2022�
     <!-- STATS -->
     <section class="stats container" aria-label="Career highlights">
       <div class="stat"><span class="stat-num" data-count="16" data-years>16</span><span class="stat-suffix">yrs</span><p>in software quality, from hands-on test automation to test management and team leadership</p></div>
-      <div class="stat"><span class="stat-num" data-count="16">16</span><span class="stat-suffix">+</span><p>engineers led as direct reports or mentored as a career coach</p></div>
+      <div class="stat"><span class="stat-num" data-count="18">18</span><span class="stat-suffix">+</span><p>engineers led as direct reports or mentored as a career coach</p></div>
       <div class="stat"><span class="stat-num" data-count="3">3</span><span class="stat-suffix">domains</span><p>SaaS, MedTech and Automotive, each with very different quality bars</p></div>
       <div class="stat"><span class="stat-num" data-count="80">80</span><span class="stat-suffix">%</span><p>hands-on engineering in my lead role. I still write the frameworks.</p></div>
     </section>
@@ -462,12 +462,160 @@ saas/contentsquare <span class="t-run">RUNNING</span> <span class="t-dim">2022�
     </section>
 
     <!-- GITHUB -->
-    <section class="section container" id="work" hidden>
+    <section class="section container" id="work">
       <div class="section-head">
         <p class="eyebrow">07 · Open source</p>
         <h2>On GitHub</h2>
       </div>
-      <div class="repo-grid" data-github-user="BogdanRosca" aria-live="polite"></div>
+
+      <article class="feature">
+        <div class="feature-head">
+          <div>
+            <p class="cert-issuer">Featured project</p>
+            <h3>meal-planner</h3>
+            <p class="feature-pitch">A meal planner with recipes, a weekly calendar and a shopping list, built as my quality engineering lab: a full-stack app where every PR runs through linting, unit, integration and E2E tests before it can merge.</p>
+          </div>
+          <a class="btn btn-ghost" href="https://github.com/BogdanRosca/meal-planner" target="_blank" rel="noopener">View repo ↗</a>
+        </div>
+        <ul class="tags">
+          <li>React</li><li>TypeScript</li><li>FastAPI</li><li>Python</li><li>PostgreSQL</li><li>Claude API</li>
+          <li>GitHub Actions</li><li>Pytest</li><li>Jest</li><li>Playwright</li><li>Allure</li>
+        </ul>
+
+        <div class="feature-grid">
+          <div class="feature-col">
+            <h4 class="feature-label">Architecture</h4>
+            <ol class="arch">
+              <li class="arch-node">
+                <span class="tool-logo logo-react" aria-hidden="true"></span>
+                <div><strong>React SPA</strong><span>React 18 + TypeScript, CSS Modules, ESLint + Prettier</span></div>
+              </li>
+              <li class="arch-node">
+                <span class="tool-logo logo-fastapi" aria-hidden="true"></span>
+                <div><strong>FastAPI</strong><span>REST + JSON, Pydantic models, auth with per-user data isolation</span></div>
+              </li>
+              <li class="arch-node">
+                <span class="tool-logo logo-postgresql" aria-hidden="true"></span>
+                <div><strong>PostgreSQL 15</strong><span>Versioned SQL migrations, applied to production when they merge</span></div>
+              </li>
+            </ol>
+            <div class="arch-ai">
+              <span class="tool-logo logo-claude" aria-hidden="true"></span>
+              <div>
+                <strong>AI recipe import</strong>
+                <span>A YouTube, Instagram or Facebook link becomes a recipe draft: the backend fetches the video metadata and transcript, and Claude extracts the recipe with structured outputs.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-col">
+            <h4 class="feature-label">CI on every pull request</h4>
+            <div class="terminal" role="img" aria-label="The mergeable workflow: path filter, then lint, unit, integration and Playwright E2E tests pass, Allure reports are published to GitHub Pages and the test summary is posted as a PR comment.">
+              <div class="terminal-bar"><span></span><span></span><span></span><code>.github/workflows/mergeable.yaml</code></div>
+              <pre class="terminal-body" aria-hidden="true"><code><span class="t-dim">$</span> gh pr checks
+<span class="t-dim">path filter → backend, frontend</span>
+
+lint    flake8 · eslint   <span class="t-pass">PASSED</span>
+unit    pytest · jest     <span class="t-pass">PASSED</span>
+integ   pytest + pg15     <span class="t-pass">PASSED</span>
+e2e     playwright        <span class="t-pass">PASSED</span>
+report  allure → pages    <span class="t-run">PUBLISHED</span>
+comment summary → PR      <span class="t-run">UPDATED</span>
+
+<span class="t-dim">github-actions commented:</span>
+<span class="t-dim">│</span> ## Test Results Summary
+<span class="t-dim">│</span> FE  unit <span class="t-pass">✓</span>  integ <span class="t-pass">✓</span>  e2e <span class="t-pass">✓</span>
+<span class="t-dim">│</span> BE  unit <span class="t-pass">✓</span>  integ <span class="t-pass">✓</span>
+<span class="t-dim">│</span> 📊 Allure reports → GitHub Pages
+
+<span class="t-pass">══ mergeable ✓ ready to merge ══</span><span class="cursor">▍</span></code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="layers">
+          <h4 class="feature-label">Layered test strategy</h4>
+          <p class="layers-sub">Each layer has a different job, runs as its own CI job and publishes its own Allure report. Cheap, fast checks form the base; slower, more realistic ones sit on top.</p>
+          <div class="layers-body">
+            <div class="layers-axis" aria-hidden="true"><span>Slower · fewer<br>closer to the user</span><span>Faster · more<br>closer to the code</span></div>
+            <ol class="pyramid">
+              <li class="layer layer-ai" style="--w: 44%">
+                <span class="layer-tag">AI</span>
+                <div class="layer-main">
+                  <strong>AI review</strong>
+                  <span>Claude Code reviews PRs labelled “AI Review”</span>
+                </div>
+              </li>
+              <li class="layer" style="--w: 58%; --mix: 8%">
+                <span class="layer-tag">L4</span>
+                <div class="layer-main">
+                  <strong>End-to-end</strong>
+                  <span>Login and meal-planning journeys in a real browser, with page objects and API mocks</span>
+                  <ul class="layer-tools"><li>Playwright · 2 specs</li></ul>
+                </div>
+              </li>
+              <li class="layer" style="--w: 72%; --mix: 13%">
+                <span class="layer-tag">L3</span>
+                <div class="layer-main">
+                  <strong>Integration</strong>
+                  <span>API against a real Postgres 15 container, including per-user data isolation; FE services and hooks against the running app</span>
+                  <ul class="layer-tools"><li>Pytest · 10 files</li><li>Jest · running app</li></ul>
+                </div>
+              </li>
+              <li class="layer" style="--w: 86%; --mix: 18%">
+                <span class="layer-tag">L2</span>
+                <div class="layer-main">
+                  <strong>Unit &amp; component</strong>
+                  <span>Endpoints, models, the LLM extractor, hooks and components in isolation, with external services mocked</span>
+                  <ul class="layer-tools"><li>Pytest · 13 files</li><li>Jest · 43 files</li></ul>
+                </div>
+              </li>
+              <li class="layer" style="--w: 100%; --mix: 24%">
+                <span class="layer-tag">L1</span>
+                <div class="layer-main">
+                  <strong>Static analysis</strong>
+                  <span>The gate: no test job starts until linting and formatting are clean</span>
+                  <ul class="layer-tools"><li>Flake8</li><li>ESLint</li><li>Prettier</li></ul>
+                </div>
+              </li>
+            </ol>
+          </div>
+          <ol class="layers-flow" aria-label="Pipeline order">
+            <li>L1 lint passes</li>
+            <li>L2 · L3 · L4 run in parallel</li>
+            <li>Allure report per layer</li>
+            <li>One PR comment</li>
+            <li>Mergeable gate</li>
+          </ol>
+        </div>
+
+        <ul class="feature-points">
+          <li>
+            <span class="p-num">01</span>
+            <h4>LLM output you can trust</h4>
+            <p>Schema-validated extraction, unit normalisation, guessed fields flagged for review, and video text treated as untrusted input.</p>
+          </li>
+          <li>
+            <span class="p-num">02</span>
+            <h4>Pipelines that only run what changed</h4>
+            <p>A path filter triggers reusable BE/FE workflows. Integration tests run against a real Postgres 15 service container, and a single gate job decides whether the PR can merge.</p>
+          </li>
+          <li>
+            <span class="p-num">03</span>
+            <h4>Reports with history</h4>
+            <p>Allure reports keep trend history on GitHub Pages. One PR comment is updated in place with results and report links for every suite.</p>
+          </li>
+          <li>
+            <span class="p-num">04</span>
+            <h4>AI in the review loop</h4>
+            <p>Claude Code reviews PRs labelled “AI Review” and answers @claude mentions, guided by project rules and skills in .claude/.</p>
+          </li>
+        </ul>
+
+        <p class="feature-next"><strong>Next up:</strong> contract and performance tests, dedicated testing agents, plus a quality KPI dashboard.</p>
+      </article>
+
+      <div class="repo-grid" data-github-user="BogdanRosca" aria-live="polite" hidden></div>
     </section>
 
     <!-- CONTACT -->
