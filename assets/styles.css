@@ -159,9 +159,8 @@ ul, ol { margin: 0; padding: 0; }
 
 /* Cards */
 .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; transition: transform .2s, box-shadow .2s, border-color .2s; }
+.card { background: linear-gradient(160deg, var(--accent-soft), var(--surface) 55%); border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: var(--radius); padding: 28px; transition: transform .2s, box-shadow .2s, border-color .2s; }
 .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
-.card-feature { background: linear-gradient(160deg, var(--accent-soft), var(--surface) 55%); border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); }
 .card-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-soft); color: var(--accent-ink); display: grid; place-items: center; margin-bottom: 18px; }
 .card-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .card h3 { font-size: 1.2rem; margin-bottom: 10px; }
@@ -215,8 +214,7 @@ ul, ol { margin: 0; padding: 0; }
 
 /* Certs */
 .cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.cert { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; }
-.cert-highlight { border-color: var(--accent); background: linear-gradient(160deg, var(--accent-soft), var(--surface) 70%); }
+.cert { background: linear-gradient(160deg, var(--accent-soft), var(--surface) 55%); border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; }
 .cert-issuer { font: 600 12px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--accent-ink); margin-bottom: 8px; }
 .cert h3 { font-size: 1rem; font-weight: 650; margin-bottom: 10px; }
 .cert-date { margin: auto 0 0; font: 13px var(--mono); color: var(--ink-3); }
