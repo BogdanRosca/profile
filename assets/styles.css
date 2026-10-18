@@ -260,7 +260,7 @@ ul, ol { margin: 0; padding: 0; }
 .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .quote { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; position: relative; }
 .quote::before { content: "“"; position: absolute; top: 6px; right: 22px; font: 800 56px/1 Georgia, serif; color: var(--accent-soft); }
-.quote blockquote { margin: 0 0 18px; font-size: 1.1rem; color: var(--ink); }
+.quote blockquote { margin: 0 0 18px; padding-right: 40px; font-size: 1.1rem; color: var(--ink); }
 .quote figcaption { display: flex; flex-direction: column; font-size: 14.5px; }
 .quote figcaption span { color: var(--ink-3); }
 .more-link { margin-top: 20px; font-weight: 600; }
