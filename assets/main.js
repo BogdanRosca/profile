@@ -88,13 +88,28 @@
     badgeModal.addEventListener("click", (e) => { if (e.target === badgeModal) badgeModal.close(); });
   }
 
+  // Only one cert group open at a time: opening one closes the others.
+  // (Not the native <details name> accordion, since print needs every group open at once.)
+  let printing = false;
+  const certGroups = [...document.querySelectorAll("details.cert-group")];
+  certGroups.forEach((group) =>
+    group.addEventListener("toggle", () => {
+      if (printing || !group.open) return;
+      certGroups.forEach((g) => { if (g !== group) g.open = false; });
+    })
+  );
+
   // Print-as-CV: expand every role and the learning group so the PDF contains the full history.
   let closedRoles = [];
   addEventListener("beforeprint", () => {
+    printing = true;
     closedRoles = [...document.querySelectorAll("details.role:not([open]), details.cert-group:not([open])")];
     closedRoles.forEach((d) => (d.open = true));
   });
-  addEventListener("afterprint", () => closedRoles.forEach((d) => (d.open = false)));
+  addEventListener("afterprint", () => {
+    closedRoles.forEach((d) => (d.open = false));
+    printing = false;
+  });
   document.querySelector("[data-print]")?.addEventListener("click", () => print());
 
   // Public GitHub repos (section stays hidden if there is nothing to show)
