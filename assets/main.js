@@ -70,18 +70,30 @@
     revealTargets.forEach((el) => revealer.observe(el));
   }
 
-  // Completion badge popup
+  // Image popup: completion badges and the full-size app screenshot share one dialog
   const badgeModal = document.querySelector(".badge-modal");
   if (badgeModal) {
     const img = badgeModal.querySelector(".badge-modal-img");
+    const link = badgeModal.querySelector(".badge-modal-pdf");
+    const openImage = ({ src, title, alt, href, linkText, wide = false }) => {
+      badgeModal.classList.toggle("wide", wide);
+      badgeModal.querySelector("h3").textContent = title;
+      img.src = src;
+      img.alt = alt;
+      link.href = href;
+      link.textContent = linkText;
+      badgeModal.showModal();
+    };
     document.querySelectorAll(".cert-view").forEach((btn) =>
       btn.addEventListener("click", () => {
         const { badge, pdf, title } = btn.dataset;
-        badgeModal.querySelector("h3").textContent = title;
-        img.src = badge;
-        img.alt = `${title} completion badge`;
-        badgeModal.querySelector(".badge-modal-pdf").href = pdf;
-        badgeModal.showModal();
+        openImage({ src: badge, title, alt: `${title} completion badge`, href: pdf, linkText: "Open PDF ↗" });
+      })
+    );
+    document.querySelectorAll("[data-zoom]").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const { zoom, title } = btn.dataset;
+        openImage({ src: zoom, title, alt: btn.querySelector("img").alt, href: zoom, linkText: "Open full size ↗", wide: true });
       })
     );
     badgeModal.querySelector(".badge-modal-close").addEventListener("click", () => badgeModal.close());

@@ -473,10 +473,10 @@ saas/contentsquare <span class="t-run">RUNNING</span> <span class="t-dim">2022�
           <div>
             <p class="cert-issuer">Featured project</p>
             <h3>meal-planner</h3>
-            <p class="feature-pitch">A meal planner with recipes, a weekly calendar and a shopping list, built as my quality engineering lab: a full-stack app where every PR runs through linting, unit, integration and E2E tests before it can merge.</p>
           </div>
           <a class="btn btn-ghost" href="https://github.com/BogdanRosca/meal-planner" target="_blank" rel="noopener">View repo ↗</a>
         </div>
+        <p class="feature-pitch">A meal planner with recipes, a weekly calendar and a shopping list, built as my quality engineering lab: a full-stack app where every PR runs through linting, unit, integration and E2E tests before it can merge.</p>
         <ul class="tags">
           <li>React</li><li>TypeScript</li><li>FastAPI</li><li>Python</li><li>PostgreSQL</li><li>Claude API</li>
           <li>GitHub Actions</li><li>Pytest</li><li>Jest</li><li>Playwright</li><li>Allure</li>
@@ -509,7 +509,63 @@ saas/contentsquare <span class="t-run">RUNNING</span> <span class="t-dim">2022�
           </div>
 
           <div class="feature-col">
-            <h4 class="feature-label">CI on every pull request</h4>
+            <h4 class="feature-label">The app</h4>
+            <figure class="app-shot">
+              <div class="app-shot-bar" aria-hidden="true"><span></span><span></span><span></span><code>MealCraft · Recipes</code></div>
+              <button type="button" class="app-shot-open" data-zoom="assets/projects/meal-planner.jpg" data-title="MealCraft · Recipes" aria-label="View the app screenshot at full size">
+                <img src="assets/projects/meal-planner.jpg" width="1400" height="1056" loading="lazy" decoding="async" alt="The MealCraft recipes page: a grid of recipe cards with photos, category, rating, prep time and portions, next to quick actions such as Import from link and Plan meals.">
+                <span class="app-shot-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
+              </button>
+            </figure>
+          </div>
+        </div>
+
+        <div class="layers">
+          <h4 class="feature-label">Layered test strategy</h4>
+          <p class="layers-sub">Each layer has a different job, runs as its own CI job and publishes its own Allure report. Cheap, fast checks form the base; slower, more realistic ones sit on top.</p>
+          <div class="layers-body">
+            <div class="layers-axis" aria-hidden="true"><span>Slower · fewer<br>closer to the user</span><span>Faster · more<br>closer to the code</span></div>
+            <ol class="pyramid">
+              <li class="layer layer-ai" style="--w: 52%">
+                <span class="layer-tag">AI</span>
+                <div class="layer-main">
+                  <strong>AI review</strong>
+                  <span>Claude Code reviews PRs labelled “AI Review”</span>
+                </div>
+              </li>
+              <li class="layer" style="--w: 64%; --mix: 8%">
+                <span class="layer-tag">L4</span>
+                <div class="layer-main">
+                  <strong>End-to-end</strong>
+                  <span>Login and meal-planning journeys in a real browser, with page objects and API mocks</span>
+                  <ul class="layer-tools"><li>Playwright · 2 specs</li></ul>
+                </div>
+              </li>
+              <li class="layer" style="--w: 76%; --mix: 13%">
+                <span class="layer-tag">L3</span>
+                <div class="layer-main">
+                  <strong>Integration</strong>
+                  <span>API against a real Postgres 15 container, including per-user data isolation; FE services and hooks against the running app</span>
+                  <ul class="layer-tools"><li>Pytest · 10 files</li><li>Jest · running app</li></ul>
+                </div>
+              </li>
+              <li class="layer" style="--w: 88%; --mix: 18%">
+                <span class="layer-tag">L2</span>
+                <div class="layer-main">
+                  <strong>Unit &amp; component</strong>
+                  <span>Endpoints, models, the LLM extractor, hooks and components in isolation, with external services mocked</span>
+                  <ul class="layer-tools"><li>Pytest · 13 files</li><li>Jest · 43 files</li></ul>
+                </div>
+              </li>
+              <li class="layer" style="--w: 100%; --mix: 24%">
+                <span class="layer-tag">L1</span>
+                <div class="layer-main">
+                  <strong>Static analysis</strong>
+                  <span>The gate: no test job starts until linting and formatting are clean</span>
+                  <ul class="layer-tools"><li>Flake8</li><li>ESLint</li><li>Prettier</li></ul>
+                </div>
+              </li>
+            </ol>
             <div class="terminal" role="img" aria-label="The mergeable workflow: path filter, then lint, unit, integration and Playwright E2E tests pass, Allure reports are published to GitHub Pages and the test summary is posted as a PR comment.">
               <div class="terminal-bar"><span></span><span></span><span></span><code>.github/workflows/mergeable.yaml</code></div>
               <pre class="terminal-body" aria-hidden="true"><code><span class="t-dim">$</span> gh pr checks
@@ -530,55 +586,6 @@ comment summary → PR      <span class="t-run">UPDATED</span>
 
 <span class="t-pass">══ mergeable ✓ ready to merge ══</span><span class="cursor">▍</span></code></pre>
             </div>
-          </div>
-        </div>
-
-        <div class="layers">
-          <h4 class="feature-label">Layered test strategy</h4>
-          <p class="layers-sub">Each layer has a different job, runs as its own CI job and publishes its own Allure report. Cheap, fast checks form the base; slower, more realistic ones sit on top.</p>
-          <div class="layers-body">
-            <div class="layers-axis" aria-hidden="true"><span>Slower · fewer<br>closer to the user</span><span>Faster · more<br>closer to the code</span></div>
-            <ol class="pyramid">
-              <li class="layer layer-ai" style="--w: 44%">
-                <span class="layer-tag">AI</span>
-                <div class="layer-main">
-                  <strong>AI review</strong>
-                  <span>Claude Code reviews PRs labelled “AI Review”</span>
-                </div>
-              </li>
-              <li class="layer" style="--w: 58%; --mix: 8%">
-                <span class="layer-tag">L4</span>
-                <div class="layer-main">
-                  <strong>End-to-end</strong>
-                  <span>Login and meal-planning journeys in a real browser, with page objects and API mocks</span>
-                  <ul class="layer-tools"><li>Playwright · 2 specs</li></ul>
-                </div>
-              </li>
-              <li class="layer" style="--w: 72%; --mix: 13%">
-                <span class="layer-tag">L3</span>
-                <div class="layer-main">
-                  <strong>Integration</strong>
-                  <span>API against a real Postgres 15 container, including per-user data isolation; FE services and hooks against the running app</span>
-                  <ul class="layer-tools"><li>Pytest · 10 files</li><li>Jest · running app</li></ul>
-                </div>
-              </li>
-              <li class="layer" style="--w: 86%; --mix: 18%">
-                <span class="layer-tag">L2</span>
-                <div class="layer-main">
-                  <strong>Unit &amp; component</strong>
-                  <span>Endpoints, models, the LLM extractor, hooks and components in isolation, with external services mocked</span>
-                  <ul class="layer-tools"><li>Pytest · 13 files</li><li>Jest · 43 files</li></ul>
-                </div>
-              </li>
-              <li class="layer" style="--w: 100%; --mix: 24%">
-                <span class="layer-tag">L1</span>
-                <div class="layer-main">
-                  <strong>Static analysis</strong>
-                  <span>The gate: no test job starts until linting and formatting are clean</span>
-                  <ul class="layer-tools"><li>Flake8</li><li>ESLint</li><li>Prettier</li></ul>
-                </div>
-              </li>
-            </ol>
           </div>
           <ol class="layers-flow" aria-label="Pipeline order">
             <li>L1 lint passes</li>
@@ -625,8 +632,8 @@ comment summary → PR      <span class="t-run">UPDATED</span>
         <h2>Building a quality function that scales with AI?</h2>
         <p>I'm happy to talk about Staff/Principal SDET, Quality Engineering leadership and AI-in-testing roles, or just to swap notes on agentic testing.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="https://www.linkedin.com/in/bogdan-rosca-67a03a90/" target="_blank" rel="noopener">Connect on LinkedIn</a>
-          <a class="btn btn-ghost" href="https://github.com/BogdanRosca" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn-primary" href="https://www.linkedin.com/in/bogdan-rosca-67a03a90/" target="_blank" rel="noopener"><svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Connect on LinkedIn</a>
+          <a class="btn btn-ghost" href="https://github.com/BogdanRosca" target="_blank" rel="noopener"><svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3"/></svg>To GitHub</a>
         </div>
         <ul class="facts">
           <li><span><svg class="fact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Based in</span>Barcelona, Spain</li>
