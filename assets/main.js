@@ -160,11 +160,11 @@
     const LOGOS = {
       "Claude Code": "claude", "Hermes AI": "hermes", "MCP": "modelcontextprotocol", "GitHub Copilot": "githubcopilot", "Cursor": "cursor",
       "Pytest": "pytest", "Cypress": "cypress", "Appium": "appium", "Selenium": "selenium", "Maestro": "maestro",
-      "Robot Framework": "robotframework", "Radish / BDD": "cucumber", "Tricentis": "tricentis",
+      "Robot Framework": "robotframework", "Radish (BDD)": "cucumber", "Tricentis": "tricentis",
       "Python": "python", "TypeScript": "typescript", "JavaScript": "javascript",
       "GitHub Actions": "githubactions", "Docker": "docker", "Kubernetes": "kubernetes", "Argo CD": "argo",
       "Jenkins": "jenkins", "RabbitMQ": "rabbitmq", "Postgres": "postgresql", "FastAPI": "fastapi",
-      "React": "react", "Postman": "postman", "TestRail": "testrail", "JIRA": "jira", "Confluence": "confluence",
+      "React": "react", "Postman": "postman", "TestRail": "testrail", "Jira": "jira", "Confluence": "confluence",
       "AWS Bedrock": "awsbedrock", "Dust": "dust", "Playwright": "playwright", "WebdriverIO": "webdriverio",
       "Proxyman": "proxyman", "BrowserStack": "browserstack", "HP ALM": "hpalm", "IBM DOORS": "ibmdoors",
     };
