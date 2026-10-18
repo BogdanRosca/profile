@@ -95,6 +95,7 @@ ul, ol { margin: 0; padding: 0; }
 
 /* ---------- Hero ---------- */
 .hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center; padding: 72px 0 48px; }
+.hero > * { min-width: 0; }
 .status-pill { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); padding: 6px 14px 6px 10px; border-radius: 999px; margin-bottom: 24px; }
 .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--accent); animation: pulse 2s infinite; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); } 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
@@ -355,6 +356,9 @@ ul, ol { margin: 0; padding: 0; }
   .role-dates { margin-left: 0; }
   .role summary::after { margin-left: auto; }
   .company-head .meta { font-size: 13.5px; }
+}
+@media (max-width: 480px) {
+  .terminal-body { padding: 18px 16px 22px; font-size: clamp(10.5px, 3.05vw, 13.5px); }
 }
 @media (max-width: 420px) {
   .stats { grid-template-columns: 1fr; }
