@@ -223,4 +223,14 @@
   }
 
   document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
+
+  // Years of experience, counted from Oct 2010
+  const now = new Date();
+  const years = now.getFullYear() - 2010 - (now.getMonth() < 9 ? 1 : 0);
+  document.querySelectorAll("[data-years]").forEach((el) => {
+    el.textContent = years;
+    if (el.dataset.count) el.dataset.count = years;
+  });
+  document.querySelectorAll("[data-years-label]").forEach((el) =>
+    el.setAttribute("aria-label", el.getAttribute("aria-label").replace(/\d+ years/, `${years} years`)));
 })();
