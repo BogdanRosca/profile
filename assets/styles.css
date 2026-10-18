@@ -222,8 +222,12 @@ ul, ol { margin: 0; padding: 0; }
 .cert-group[open] { grid-column: 1 / -1; border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); box-shadow: var(--shadow); }
 .cert-group summary { position: relative; display: flex; flex-direction: column; height: 100%; padding: 20px 52px 20px 22px; cursor: pointer; list-style: none; }
 .cert-group summary::-webkit-details-marker { display: none; }
-.cert-group summary::after { content: "+"; position: absolute; top: 16px; right: 20px; font: 400 20px var(--mono); color: var(--ink-3); transition: transform .2s; }
-.cert-group[open] summary::after { transform: rotate(45deg); }
+.cert-group summary::after { content: "+"; position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; font: 400 20px/1 var(--mono); color: var(--accent-ink); background: var(--accent-soft); transition: transform .2s, color .2s, background .2s; }
+.cert-group[open] summary::after { transform: rotate(45deg); color: var(--ink-3); background: none; }
+/* Expanding ring around the "+" hints that the card opens; stops once opened or hovered. */
+.cert-group summary::before { content: ""; position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--accent); pointer-events: none; animation: ring 2.4s ease-out infinite; }
+.cert-group[open] summary::before, .cert-group summary:hover::before { animation: none; opacity: 0; }
+@keyframes ring { 0% { transform: scale(1); opacity: .7; } 60%, 100% { transform: scale(1.9); opacity: 0; } }
 .cert-list { list-style: none; padding: 0 22px 12px; margin: 0; }
 .cert-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); font-weight: 600; font-size: 15px; }
 .cert-list .cert-date { margin: 0; white-space: nowrap; font-weight: 400; }
@@ -241,11 +245,12 @@ ul, ol { margin: 0; padding: 0; }
 .badge-modal-head h3 { margin: 0; font-size: 1rem; }
 .badge-modal-close { border: 0; background: none; color: var(--ink-3); font: 400 26px/1 var(--mono); cursor: pointer; }
 .badge-modal-close:hover { color: var(--ink); }
-.badge-modal-img { display: block; width: 100%; height: auto; aspect-ratio: 1584 / 1160; background: var(--surface-2); }
+.badge-modal-img { display: block; width: 100%; height: auto; aspect-ratio: auto 1584 / 1160; background: var(--surface-2); }
 .badge-modal-foot { margin: 0; padding: 12px 18px; font: 600 14px var(--font); }
 .badge-modal-foot a { text-decoration: none; }
 .cert-list li:has(.cert-badge) .cert-date { margin-left: auto; }
 .cert-badge { width: 44px; height: 44px; flex: none; margin-right: -4px; }
+.cert-badge-round { border-radius: 50%; }
 
 /* Quotes */
 .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -321,6 +326,7 @@ ul, ol { margin: 0; padding: 0; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .pulse, .cursor { animation: none; }
+  .cert-group summary::before { animation: none; opacity: 0; }
 }
 
 /* ---------- Responsive ---------- */
