@@ -148,7 +148,7 @@
         // Longer descriptions than GitHub's one-liner; each entry is a paragraph.
         const DESCRIPTIONS = {
           "meal-planner": [
-            "A meal planner I built as a quality engineering lab: FastAPI ( Python) and React ( Typescript), with unit ( Jest), integration( Pytest) tests and E2E ( Playwright) running in GitHub Actions.",
+            "A meal planner I built as a quality engineering lab: FastAPI (Python) and React (TypeScript), with unit (Jest), integration (Pytest) tests and E2E (Playwright) running in GitHub Actions.",
             "Contract and performance layers are in progress. As well a Quality KPIs dashboard.",
           ],
         };
