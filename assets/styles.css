@@ -258,7 +258,7 @@ ul, ol { margin: 0; padding: 0; }
 /* Quotes */
 .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .quote { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; position: relative; }
-.quote::before { content: "“"; position: absolute; top: 4px; right: 22px; font: 800 72px/1 Georgia, serif; color: var(--accent-soft); }
+.quote::before { content: "“"; position: absolute; top: 6px; right: 22px; font: 800 56px/1 Georgia, serif; color: var(--accent-soft); }
 .quote blockquote { margin: 0 0 18px; font-size: 1.1rem; color: var(--ink); }
 .quote figcaption { display: flex; flex-direction: column; font-size: 14.5px; }
 .quote figcaption span { color: var(--ink-3); }
@@ -284,7 +284,8 @@ ul, ol { margin: 0; padding: 0; }
 .contact-card .btn-ghost { background: transparent; color: var(--bg); border-color: color-mix(in srgb, var(--bg) 30%, transparent); }
 .contact-card .btn-primary { background: #34d399; color: #052e22; }
 .facts { list-style: none; display: flex; flex-wrap: wrap; gap: 12px 40px; margin-top: 36px; font-size: 15px; }
-.facts span { display: block; font: 600 11.5px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: #34d399; margin-bottom: 2px; }
+.facts span { display: flex; align-items: center; gap: 6px; font: 600 11.5px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: #34d399; margin-bottom: 2px; }
+.fact-icon { flex: none; width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* Footer */
 .tool-marquee {
