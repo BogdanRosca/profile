@@ -148,8 +148,8 @@
         // Longer descriptions than GitHub's one-liner; each entry is a paragraph.
         const DESCRIPTIONS = {
           "meal-planner": [
-            "A meal planner I built as a quality engineering lab: FastAPI (Python) and React (TypeScript), with unit (Jest), integration (Pytest) tests and E2E (Playwright) running in GitHub Actions.",
-            "Contract and performance layers are in progress. As well a Quality KPIs dashboard.",
+            "A meal planner I built as a quality engineering lab: FastAPI (Python) and React (TypeScript), with unit (Jest, Pytest), integration (Pytest) and E2E (Playwright) tests running in GitHub Actions.",
+            "Next up: contract and performance tests, plus a quality KPI dashboard.",
           ],
         };
         const shown = repos.filter((r) => !r.fork && !HIDDEN.includes(r.name) && r.description).slice(0, 6);
