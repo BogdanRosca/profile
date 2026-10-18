@@ -205,7 +205,8 @@ ul, ol { margin: 0; padding: 0; }
 .split { display: flex; height: 26px; border-radius: 8px; overflow: hidden; font: 600 11.5px var(--mono); margin-bottom: 16px; max-width: 420px; }
 .split span { width: var(--w); display: flex; align-items: center; padding-inline: 10px; white-space: nowrap; }
 .split span:first-child { background: var(--accent); color: var(--on-accent); }
-.split span:last-child { background: var(--surface-2); color: var(--ink-2); }
+/* On narrow screens the small segment keeps its whole label; the large one gives up the space. */
+.split span:last-child { min-width: max-content; background: var(--surface-2); color: var(--ink-2); }
 
 /* Stack */
 .stack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
