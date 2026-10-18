@@ -110,7 +110,6 @@
     closedRoles.forEach((d) => (d.open = false));
     printing = false;
   });
-  document.querySelector("[data-print]")?.addEventListener("click", () => print());
 
   // Public GitHub repos (section stays hidden if there is nothing to show)
   const repoGrid = document.querySelector("[data-github-user]");
