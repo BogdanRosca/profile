@@ -56,7 +56,7 @@
     requestAnimationFrame(step);
   };
 
-  const revealTargets = document.querySelectorAll(".section-head, .card, .principles li, .company, .stack-group, .cert, .quote, .stat, .contact-card");
+  const revealTargets = document.querySelectorAll(".section-head, .card, .feature, .principles li, .company, .stack-group, .cert, .quote, .stat, .contact-card");
   if (!reduceMotion && "IntersectionObserver" in window) {
     revealTargets.forEach((el) => el.classList.add("reveal"));
     const revealer = new IntersectionObserver((entries) => {
@@ -70,18 +70,30 @@
     revealTargets.forEach((el) => revealer.observe(el));
   }
 
-  // Completion badge popup
+  // Image popup: completion badges and the full-size app screenshot share one dialog
   const badgeModal = document.querySelector(".badge-modal");
   if (badgeModal) {
     const img = badgeModal.querySelector(".badge-modal-img");
+    const link = badgeModal.querySelector(".badge-modal-pdf");
+    const openImage = ({ src, title, alt, href, linkText, wide = false }) => {
+      badgeModal.classList.toggle("wide", wide);
+      badgeModal.querySelector("h3").textContent = title;
+      img.src = src;
+      img.alt = alt;
+      link.href = href;
+      link.textContent = linkText;
+      badgeModal.showModal();
+    };
     document.querySelectorAll(".cert-view").forEach((btn) =>
       btn.addEventListener("click", () => {
         const { badge, pdf, title } = btn.dataset;
-        badgeModal.querySelector("h3").textContent = title;
-        img.src = badge;
-        img.alt = `${title} completion badge`;
-        badgeModal.querySelector(".badge-modal-pdf").href = pdf;
-        badgeModal.showModal();
+        openImage({ src: badge, title, alt: `${title} completion badge`, href: pdf, linkText: "Open PDF ↗" });
+      })
+    );
+    document.querySelectorAll("[data-zoom]").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const { zoom, title } = btn.dataset;
+        openImage({ src: zoom, title, alt: btn.querySelector("img").alt, href: zoom, linkText: "Open full size ↗", wide: true });
       })
     );
     badgeModal.querySelector(".badge-modal-close").addEventListener("click", () => badgeModal.close());
@@ -135,23 +147,18 @@
     placeCertContent();
   });
 
-  // Public GitHub repos (section stays hidden if there is nothing to show)
+  // Public GitHub repos (grid stays hidden if there is nothing to show)
   const repoGrid = document.querySelector("[data-github-user]");
   if (repoGrid) {
     const user = repoGrid.dataset.githubUser;
     fetch(`https://api.github.com/users/${user}/repos?sort=updated&per_page=12`)
       .then((r) => (r.ok ? r.json() : []))
       .then((repos) => {
-        const HIDDEN = ["profile", "replit-project"];
+        const HIDDEN = ["profile", "replit-project", "meal-planner"]; // meal-planner has its own featured card
         // GitHub only reports the dominant language; list the rest of the stack here.
-        const EXTRA_TAGS = { "meal-planner": ["Python", "Claude Code"] };
+        const EXTRA_TAGS = {};
         // Longer descriptions than GitHub's one-liner; each entry is a paragraph.
-        const DESCRIPTIONS = {
-          "meal-planner": [
-            "A meal planner I built as a quality engineering lab: FastAPI (Python) and React (TypeScript), with unit (Jest, Pytest), integration (Pytest) and E2E (Playwright) tests running in GitHub Actions.",
-            "Next up: contract and performance tests, plus a quality KPI dashboard.",
-          ],
-        };
+        const DESCRIPTIONS = {};
         const shown = repos.filter((r) => !r.fork && !HIDDEN.includes(r.name) && r.description).slice(0, 6);
         if (!shown.length) return;
         repoGrid.replaceChildren(...shown.map((r) => {
@@ -173,7 +180,7 @@
           a.append(h, ...paragraphs, meta);
           return a;
         }));
-        repoGrid.closest("section").hidden = false;
+        repoGrid.hidden = false;
       })
       .catch(() => {});
   }
