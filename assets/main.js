@@ -158,8 +158,8 @@
   const track = document.querySelector("[data-marquee]");
   if (track) {
     const LOGOS = {
-      "Claude Code": "claude", "MCP": "modelcontextprotocol", "GitHub Copilot": "githubcopilot", "Cursor": "cursor",
-      "Pytest": "pytest", "Cypress": "cypress", "Appium": "appium",
+      "Claude Code": "claude", "Hermes AI": "hermes", "MCP": "modelcontextprotocol", "GitHub Copilot": "githubcopilot", "Cursor": "cursor",
+      "Pytest": "pytest", "Cypress": "cypress", "Appium": "appium", "Selenium": "selenium", "Maestro": "maestro",
       "Robot Framework": "robotframework", "Radish / BDD": "cucumber", "Tricentis": "tricentis",
       "Python": "python", "TypeScript": "typescript", "JavaScript": "javascript",
       "GitHub Actions": "githubactions", "Docker": "docker", "Kubernetes": "kubernetes", "Argo CD": "argo",
@@ -169,7 +169,7 @@
       "Proxyman": "proxyman", "BrowserStack": "browserstack", "HP ALM": "hpalm", "IBM DOORS": "ibmdoors",
     };
     // Official marks with no SVG source, converted to single-colour PNG masks.
-    const PNG_LOGOS = new Set(["awsbedrock", "dust", "playwright", "webdriverio", "proxyman", "browserstack", "hpalm", "ibmdoors"]);
+    const PNG_LOGOS = new Set(["awsbedrock", "dust", "hermes", "maestro", "playwright", "webdriverio", "proxyman", "browserstack", "hpalm", "ibmdoors"]);
     const SKIP = new Set(["Agile", "V-model"]); // methodologies, not tools
     const names = [...document.querySelectorAll("#stack .tags li")]
       .map((li) => li.textContent.trim())
